@@ -1,0 +1,24 @@
+ixoryn:
+  logging:
+    level: INFO
+    directory: logs
+
+  security:
+    max_file_size_mb: 50
+    allow_lossy_stego: false
+
+  steganography:
+    ml_detection_threshold: 0.7
+    allowed_image_types:
+      - image/png
+      - image/bmp
+    allowed_audio_types:
+      - audio/wav
+
+  cryptography:
+    min_password_entropy: 60
+
+  reports:
+    default_format: json
+    output_directory: reports
+

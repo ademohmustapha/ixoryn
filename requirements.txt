@@ -1,0 +1,15 @@
+cryptography
+argon2-cffi
+rich
+python-magic
+pillow
+opencv-python
+soundfile
+pydub
+passlib
+dnspython
+idna
+tldextract
+scikit-learn
+numpy
+
