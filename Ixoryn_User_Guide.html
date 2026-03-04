@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ixoryn — Complete User Guide v1.1.0</title>
+<style>
+  :root {
+    --bg: #0d1117; --bg2: #161b22; --bg3: #21262d;
+    --border: #30363d; --text: #c9d1d9; --text2: #8b949e;
+    --blue: #58a6ff; --green: #3fb950; --red: #f85149;
+    --yellow: #d2a520; --purple: #bc8cff; --teal: #39d353;
+    --orange: #fb8f44;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+  /* LAYOUT */
+  .wrapper { display: flex; min-height: 100vh; }
+  nav { width: 260px; min-height: 100vh; background: var(--bg2); border-right: 1px solid var(--border); position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100; padding-bottom: 40px; }
+  main { margin-left: 260px; max-width: 900px; padding: 48px 48px 80px; }
+
+  /* NAV */
+  .nav-logo { padding: 24px 20px 12px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+  .nav-logo .logo { font-size: 18px; font-weight: 800; letter-spacing: 4px; color: var(--blue); }
+  .nav-logo .ver { font-size: 11px; color: var(--text2); margin-top: 3px; }
+  nav a { display: block; padding: 6px 20px; font-size: 13px; color: var(--text2); text-decoration: none; border-left: 2px solid transparent; }
+  nav a:hover { color: var(--text); border-left-color: var(--blue); background: rgba(88,166,255,.06); }
+  nav .nav-section { padding: 12px 20px 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text2); font-weight: 700; }
+
+  /* TYPOGRAPHY */
+  h1 { font-size: 38px; font-weight: 800; color: var(--blue); margin-bottom: 8px; }
+  h2 { font-size: 26px; font-weight: 700; color: var(--text); margin: 56px 0 16px; padding-top: 24px; border-top: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 700; color: var(--blue); margin: 32px 0 12px; }
+  h4 { font-size: 14px; font-weight: 700; color: var(--orange); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  p { margin-bottom: 14px; color: var(--text); }
+  strong { color: var(--text); font-weight: 700; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #161b22, #0d1117); border: 1px solid var(--border); border-radius: 12px; padding: 40px; margin-bottom: 40px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #58a6ff, #3fb950, #f78166, #bc8cff); }
+  .hero pre { font-size: 11px; color: var(--blue); background: none; border: none; padding: 0; margin: 16px 0; }
+  .hero .tagline { color: var(--text2); font-size: 15px; margin-top: 12px; }
+  .badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+  .badge-blue { background: rgba(88,166,255,.15); color: var(--blue); border: 1px solid rgba(88,166,255,.3); }
+  .badge-green { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .badge-purple { background: rgba(188,140,255,.15); color: var(--purple); border: 1px solid rgba(188,140,255,.3); }
+
+  /* CODE */
+  code { font-family: 'Cascadia Code', 'Fira Code', 'Courier New', monospace; font-size: 13px; }
+  pre { background: #010409; border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; overflow-x: auto; margin: 16px 0; position: relative; }
+  pre code { color: #79c0ff; font-size: 13px; }
+  .cmd { background: #010409; border: 1px solid var(--border); border-radius: 6px; padding: 14px 18px; margin: 12px 0; }
+  .cmd .prompt { color: var(--green); }
+  .cmd .command { color: #e6edf3; }
+  .cmd .comment { color: var(--text2); font-style: italic; }
+  .cmd .output { color: var(--text2); font-size: 12px; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); white-space: pre-wrap; }
+  .inline-code { background: rgba(110,118,129,.2); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 12px; color: #79c0ff; }
+
+  /* CALLOUTS */
+  .callout { border-radius: 8px; padding: 16px 20px; margin: 20px 0; border-left: 4px solid; }
+  .callout-info { background: rgba(88,166,255,.08); border-color: var(--blue); }
+  .callout-warn { background: rgba(210,153,34,.08); border-color: var(--yellow); }
+  .callout-danger { background: rgba(248,81,73,.08); border-color: var(--red); }
+  .callout-tip { background: rgba(63,185,80,.08); border-color: var(--green); }
+  .callout-title { font-weight: 700; font-size: 13px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .callout-info .callout-title { color: var(--blue); }
+  .callout-warn .callout-title { color: var(--yellow); }
+  .callout-danger .callout-title { color: var(--red); }
+  .callout-tip .callout-title { color: var(--green); }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  th { background: var(--bg3); color: var(--text2); text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--bg3); }
+  tr:hover td { background: rgba(88,166,255,.03); }
+
+  /* DIAGRAMS */
+  .diagram { background: #010409; border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin: 20px 0; font-family: monospace; font-size: 12px; color: #79c0ff; white-space: pre; overflow-x: auto; }
+
+  /* FLOW */
+  .flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+  .flow-step { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px; font-size: 13px; text-align: center; min-width: 120px; }
+  .flow-step .step-num { font-size: 10px; color: var(--text2); text-transform: uppercase; }
+  .flow-step .step-label { color: var(--blue); font-weight: 700; margin-top: 4px; }
+  .flow-arrow { color: var(--text2); font-size: 20px; }
+
+  /* MODULE CARDS */
+  .module-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .module-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .module-card .mc-icon { font-size: 24px; margin-bottom: 8px; }
+  .module-card .mc-name { font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+  .module-card .mc-desc { font-size: 13px; color: var(--text2); }
+
+  /* COMMAND REF */
+  .cmd-ref { margin: 8px 0; padding: 10px 14px; background: var(--bg2); border-radius: 6px; border-left: 3px solid var(--blue); }
+  .cmd-ref .cmd-syntax { font-family: monospace; font-size: 13px; color: #e6edf3; }
+  .cmd-ref .cmd-desc { font-size: 12px; color: var(--text2); margin-top: 4px; }
+  .cmd-ref .cmd-flags { font-size: 11px; color: var(--purple); margin-top: 4px; }
+
+  /* STEPS */
+  .steps { counter-reset: steps; margin: 20px 0; }
+  .step { display: flex; gap: 16px; margin-bottom: 24px; }
+  .step-number { width: 32px; height: 32px; background: var(--blue); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+  .step-content { flex: 1; }
+  .step-content h4 { margin: 0 0 6px; color: var(--text); }
+
+  /* COMPARISON */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .compare-col { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+  .compare-col.good { border-top: 3px solid var(--green); }
+  .compare-col.bad { border-top: 3px solid var(--red); }
+  .compare-label { font-weight: 700; font-size: 13px; margin-bottom: 12px; }
+  .compare-col.good .compare-label { color: var(--green); }
+  .compare-col.bad .compare-label { color: var(--red); }
+  .compare-item { font-size: 13px; color: var(--text2); padding: 5px 0; border-bottom: 1px solid var(--bg3); }
+
+  /* TECH TABLE */
+  .tech-reason { font-size: 12px; color: var(--text2); }
+  .vs { font-size: 11px; color: var(--red); font-style: italic; }
+
+  /* TOC highlight */
+  .toc-active { color: var(--blue) !important; border-left-color: var(--blue) !important; background: rgba(88,166,255,.08) !important; }
+
+  /* FOOTER */
+  footer { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text2); font-size: 12px; text-align: center; }
+
+  @media (max-width: 900px) {
+    nav { display: none; }
+    main { margin-left: 0; padding: 24px 20px; }
+    .module-grid, .compare { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo">IXORYN</div>
+    <div class="ver">User Guide v1.1.0 — Complete Reference</div>
+  </div>
+
+  <div class="nav-section">Getting Started</div>
+  <a href="#introduction">Introduction</a>
+  <a href="#installation">Installation</a>
+  <a href="#first-run">First Run</a>
+  <a href="#modes">Operating Modes</a>
+
+  <div class="nav-section">Modules</div>
+  <a href="#cryptography">🔐 Cryptography</a>
+  <a href="#steganography">🕵️ Steganography</a>
+  <a href="#url-audit">🌐 URL & Domain Audit</a>
+  <a href="#password-audit">🔑 Password & Hash</a>
+  <a href="#threat-intel">🛡️ Threat Intelligence</a>
+  <a href="#reports">📊 Report Generation</a>
+
+  <div class="nav-section">Expert Mode</div>
+  <a href="#expert-shell">Expert Shell</a>
+  <a href="#command-reference">Command Reference</a>
+  <a href="#examples">Practical Examples</a>
+
+  <div class="nav-section">Operations</div>
+  <a href="#api-keys">API Key Setup</a>
+  <a href="#doctor">Ixoryn Doctor</a>
+  <a href="#testing">Running Tests</a>
+
+  <div class="nav-section">Technical</div>
+  <a href="#architecture">Architecture</a>
+  <a href="#technology-choices">Technology Choices</a>
+  <a href="#what-makes-unique">What Makes It Unique</a>
+  <a href="#limitations">Limitations</a>
+  <a href="#roadmap">Roadmap</a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main>
+
+<!-- HERO -->
+<div class="hero">
+<pre>
+  ██╗██╗  ██╗ ██████╗ ██████╗ ██╗   ██╗███╗   ██╗
+  ██║╚██╗██╔╝██╔═══██╗██╔══██╗╚██╗ ██╔╝████╗  ██║
+  ██║ ╚███╔╝ ██║   ██║██████╔╝ ╚████╔╝ ██╔██╗ ██║
+  ██║ ██╔██╗ ██║   ██║██╔══██╗  ╚██╔╝  ██║╚██╗██║
+  ██║██╔╝ ██╗╚██████╔╝██║  ██║   ██║   ██║ ╚████║
+  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═══╝</pre>
+<h1>Complete User Guide</h1>
+<p class="tagline">Advanced Security & Intelligence Platform — Everything you need to know, from first launch to expert operations.</p>
+<div class="badges">
+  <span class="badge badge-blue">v1.1.0</span>
+  <span class="badge badge-green">Kali Linux ✓</span>
+  <span class="badge badge-green">Ubuntu/Debian ✓</span>
+  <span class="badge badge-green">macOS ✓</span>
+  <span class="badge badge-green">Windows ✓</span>
+  <span class="badge badge-purple">Python 3.9+</span>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="introduction">1. Introduction</h2>
+
+<p><strong>Ixoryn</strong> is a cross-platform security intelligence platform that gives individuals and organizations world-class tools for cryptography, steganography, URL/domain threat analysis, and password security — all from a single unified interface.</p>
+
+<p>Think of it as having four elite security tools — each independently battle-tested — working together seamlessly, sharing context and results, and presenting their combined intelligence through both a friendly guided interface and a professional command shell.</p>
+
+<div class="module-grid">
+  <div class="module-card">
+    <div class="mc-icon">🔐</div>
+    <div class="mc-name">Cryptography</div>
+    <div class="mc-desc">Encrypt files and messages, sign data, verify authenticity, generate keys, and hash anything using industry-best algorithms.</div>
+  </div>
+  <div class="module-card">
+    <div class="mc-icon">🕵️</div>
+    <div class="mc-name">Steganography</div>
+    <div class="mc-desc">Forensically detect hidden data in images and audio, or covertly embed your own payloads using encryption and randomized embedding.</div>
+  </div>
+  <div class="module-card">
+    <div class="mc-icon">🌐</div>
+    <div class="mc-name">URL & Domain Audit</div>
+    <div class="mc-desc">Expose phishing, homograph attacks, typosquatting, DNS poisoning, weak SSL, and malicious domains before they harm you.</div>
+  </div>
+  <div class="module-card">
+    <div class="mc-icon">🔑</div>
+    <div class="mc-name">Password & Hash Audit</div>
+    <div class="mc-desc">Identify 300+ hash types, measure password entropy, estimate crack times, check compliance, and generate unbreakable passwords.</div>
+  </div>
+</div>
+
+<div class="callout callout-tip">
+  <div class="callout-title">💡 Who is this for?</div>
+  <p>Ixoryn is designed for everyone — from a first-time user who has never opened a terminal, to an elite penetration tester running 500-target batch audits. Both users get the same powerful capabilities, just through different interfaces.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="installation">2. Installation</h2>
+
+<h3>Prerequisites</h3>
+<p>The only thing you need installed before running Ixoryn is <strong>Python 3.9 or higher</strong>. Everything else is handled automatically.</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">ℹ️ No manual dependency setup</div>
+  <p>When you run Ixoryn for the first time, it will detect every missing package, show you what needs to be installed, and ask for your permission before installing anything. Just say <strong>Y</strong> and it handles the rest.</p>
+</div>
+
+<h3>Option A — Git Clone (Recommended)</h3>
+<div class="cmd">
+  <div><span class="prompt">$</span> <span class="command">git clone https://github.com/ixoryn/ixoryn.git</span></div>
+  <div><span class="prompt">$</span> <span class="command">cd ixoryn</span></div>
+</div>
+
+<h4>Linux / Kali / macOS</h4>
+<div class="cmd">
+  <div><span class="prompt">$</span> <span class="command">chmod +x install.sh && ./install.sh</span></div>
+  <div><span class="prompt">$</span> <span class="command">ixoryn</span></div>
+</div>
+
+<h4>Windows</h4>
+<div class="cmd">
+  <div><span class="prompt">C:\ixoryn&gt;</span> <span class="command">install.bat</span></div>
+  <div><span class="prompt">C:\ixoryn&gt;</span> <span class="command">python ixoryn.py</span></div>
+</div>
+
+<h4>Direct Run (any OS)</h4>
+<div class="cmd">
+  <div><span class="prompt">$</span> <span class="command">python3 ixoryn.py</span></div>
+</div>
+
+<h3>Option B — pip</h3>
+<div class="cmd">
+  <div><span class="prompt">$</span> <span class="command">pip install ixoryn</span></div>
+  <div><span class="prompt">$</span> <span class="command">ixoryn</span></div>
+</div>
+
+<div class="callout callout-warn">
+  <div class="callout-title">⚠️ Externally Managed Environment</div>
+  <p>On newer Linux systems (Ubuntu 23+, Debian 12+, Kali 2024+), Python may show an "externally-managed-environment" error when installing packages. Ixoryn automatically detects this and uses the <code class="inline-code">--break-system-packages</code> flag to bypass it. You do not need to create a virtual environment.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="first-run">3. Your First Run</h2>
+
+<p>When you launch Ixoryn, you will see this sequence:</p>
+
+<div class="steps">
+  <div class="step">
+    <div class="step-number">1</div>
+    <div class="step-content">
+      <h4>Banner & Dependency Scan</h4>
+      <p>Ixoryn displays its banner, then silently scans for all required Python packages and system tools. If anything is missing, it shows you a clear list.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-number">2</div>
+    <div class="step-content">
+      <h4>Install Prompt</h4>
+      <p>You are asked: <em>"Install missing dependencies now? [Y/n]"</em>. Press <strong>Y</strong> (or just Enter) to auto-install. Press <strong>N</strong> to skip — some features may be limited.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-number">3</div>
+    <div class="step-content">
+      <h4>Mode Selection</h4>
+      <p>You see three options. Choose your mode and start working.</p>
+    </div>
+  </div>
+</div>
+
+<div class="diagram">
+┌─────────────────────────────────────────────────────────────────┐
+│                     IXORYN STARTUP FLOW                         │
+└─────────────────────────────────────────────────────────────────┘
+
+  Launch ixoryn.py
+        │
+        ▼
+  ┌─────────────┐
+  │ Scan deps   │──── All present? ────── YES ──► Mode Menu
+  └─────────────┘                                      │
+        │                                              │
+        NO                                             ▼
+        │                               ┌─────────────────────────┐
+        ▼                               │  1. Beginner Mode        │
+  ┌─────────────────────┐               │  2. Expert Mode          │
+  │ Show missing list   │               │  3. Ixoryn Doctor        │
+  │ Install Y/n prompt  │               └─────────────────────────┘
+  └─────────────────────┘
+        │
+  Y ────┴──── N
+  │                │
+  ▼                ▼
+Auto-install    Continue
+all packages    (limited)
+        │
+        ▼
+    Mode Menu
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="modes">4. Operating Modes</h2>
+
+<h3>Mode 1: Beginner Mode</h3>
+<p>Beginner Mode guides you through every action with numbered menus and clear prompts. You never need to remember commands. A built-in GUI file picker lets you browse your computer visually to select files — no typing file paths required.</p>
+
+<div class="diagram">
+  Beginner Mode Menu
+  ─────────────────────────────
+  1. Cryptography
+  2. Steganography
+  3. URL & Domain Auditing
+  4. Password & Hash Auditing
+  0. Back to Main Menu
+  ─────────────────────────────
+  Select module [1-4/0]: _
+</div>
+
+<p>Everything is self-guided. For example, if you select Steganography → Operational Mode → Embed, Ixoryn will ask you: what file do you want to hide? → what file do you want to hide it in? → set a password? → where to save the output? All one step at a time.</p>
+
+<h3>Mode 2: Expert Mode</h3>
+<p>Expert Mode is a command shell modeled after tools like Metasploit. You type commands directly. This is significantly faster for advanced users and supports features like batch processing, JSON output, piping, and scripting.</p>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">help</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">help crypto</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">url audit suspicious.com -d deep</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">ti malicious-domain.xyz --json -o intel.json</span></div>
+</div>
+
+<h3>Mode 3: Ixoryn Doctor</h3>
+<p>Ixoryn Doctor is a diagnostic tool. Run it anytime something feels wrong, or as a first step when deploying Ixoryn in a new environment.</p>
+
+<p>It checks: Python version, all Python packages (with installed versions), system tools (ffmpeg, libmagic), network connectivity, file system health, then runs a quick self-test of every module. At the end it summarizes issues and can launch the full test suite.</p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="cryptography">5. Cryptography Module</h2>
+
+<p>The cryptography module handles encryption, decryption, digital signatures, key generation, and hashing. Every operation uses best-in-class algorithms chosen specifically because they are recommended by NIST, OWASP, and modern security standards.</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">ℹ️ Password Audit on Every Key Operation</div>
+  <p>Whenever you provide a password for encryption or key protection, Ixoryn automatically runs a strength audit and shows you the password's score, entropy, and estimated crack time before proceeding. If the password is weak, it warns you and asks for confirmation.</p>
+</div>
+
+<h3>5.1 Encrypting a File or Message</h3>
+
+<h4>Beginner Mode Path</h4>
+<p>Main Menu → 1. Cryptography → 1. Encrypt a file or text → choose Text or File → enter/select → enter password (password is audited) → confirm password → result displayed or file saved.</p>
+
+<h4>Expert Mode</h4>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">crypto encrypt report.pdf -p "Str0ng@Pass#2024"</span></div>
+  <div class="output">  [Password Audit] Strength: ████░  Strong | Entropy: 62.1 bits | Crack time: 14 thousand years
+  [✓] Encrypted → report.pdf.ixenc</div>
+</div>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">crypto encrypt "Top secret message" -p "Str0ng@Pass#2024"</span></div>
+  <div class="output">  [✓] Encrypted (Base64):
+  SVhPUllOMQEABgAM3xK7j2p9Rk...</div>
+</div>
+
+<h3>5.2 Decrypting</h3>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">crypto decrypt report.pdf.ixenc -p "Str0ng@Pass#2024" -o report_restored.pdf</span></div>
+  <div class="output">  [✓] Decrypted → report_restored.pdf</div>
+</div>
+
+<div class="callout callout-danger">
+  <div class="callout-title">⛔ Wrong Password Behaviour</div>
+  <p>Ixoryn uses authenticated encryption (AES-256-GCM). If you provide the wrong password, decryption fails immediately with a clear error — it does not produce garbled output. There is no way to accidentally "partially decrypt" data.</p>
+  <p>Error message: <em>"Decryption failed. Possible causes: wrong password, corrupted ciphertext, or tampered data."</em></p>
+</div>
+
+<h3>5.3 Hashing Data</h3>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">crypto hash important_file.zip -a SHA-3-256</span></div>
+  <div class="output">  [✓] SHA-3-256: a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a</div>
+</div>
+
+<table>
+  <tr><th>Algorithm</th><th>Output Size</th><th>Use Case</th><th>Security</th></tr>
+  <tr><td>SHA-256</td><td>64 hex chars</td><td>General integrity, TLS</td><td>Secure</td></tr>
+  <tr><td>SHA-3-256</td><td>64 hex chars</td><td>Quantum-resistant integrity</td><td>Excellent</td></tr>
+  <tr><td>SHA-3-512</td><td>128 hex chars</td><td>High-security integrity</td><td>Excellent</td></tr>
+  <tr><td>BLAKE2b</td><td>128 hex chars</td><td>High-speed secure hashing</td><td>Excellent</td></tr>
+  <tr><td>BLAKE2s</td><td>64 hex chars</td><td>Fast, constrained devices</td><td>Excellent</td></tr>
+  <tr><td>SHA-512</td><td>128 hex chars</td><td>Legacy compatibility</td><td>Secure</td></tr>
+</table>
+
+<h3>5.4 Digital Signatures</h3>
+
+<p>Digital signatures prove that data came from you and has not been altered since you signed it. The process uses Ed25519, a modern elliptic curve algorithm.</p>
+
+<div class="flow">
+  <div class="flow-step"><div class="step-num">Step 1</div><div class="step-label">Generate Key Pair</div></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step"><div class="step-num">Step 2</div><div class="step-label">Sign Data</div></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step"><div class="step-num">Step 3</div><div class="step-label">Share File + Sig + Public Key</div></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step"><div class="step-num">Step 4</div><div class="step-label">Recipient Verifies</div></div>
+</div>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">crypto keygen -n alice -p "KeyP@ss!9"</span></div>
+  <div class="output">  [✓] Private key → alice.ixkey
+  [✓] Public key  → alice.ixpub
+  [!] KEEP YOUR PRIVATE KEY SAFE. Never share it.</div>
+</div>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">crypto sign contract.pdf -k alice.ixkey -p "KeyP@ss!9"</span></div>
+  <div class="output">  [✓] Signature → contract.pdf.ixsig</div>
+</div>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">crypto verify contract.pdf -s contract.pdf.ixsig -k alice.ixpub</span></div>
+  <div class="output">  [✓] SIGNATURE VALID — Data is authentic and unmodified.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="steganography">6. Steganography Module</h2>
+
+<p>Steganography is the practice of hiding information inside other files — typically images or audio — in a way that the existence of hidden data is invisible to a casual observer. Ixoryn's steganography module has two completely separate phases.</p>
+
+<div class="diagram">
+  STEGANOGRAPHY MODULE
+  ─────────────────────────────────────────────────────────
+  Phase 1: Research Mode (DETECT)        Phase 2: Operational Mode (HIDE/REVEAL)
+  ──────────────────────────────         ──────────────────────────────────────
+  • LSB statistical analysis             • Embed: text, files, images, audio
+  • Chi-square attack                    • Cover formats: all common types
+  • RS analysis                          • Output: ALWAYS lossless (PNG/FLAC)
+  • DCT coefficient analysis             • Optional AES-256-GCM encryption
+  • Error Level Analysis (ELA)           • Randomized pixel traversal (defeats
+  • Entropy analysis                       statistical detectors)
+  • EXIF/metadata forensics              • Integrity verified with SHA-256
+  • ML ensemble classifier               • Password-protected extraction
+  • Suspicion score 0–100
+  • Professional forensic report
+</div>
+
+<h3>6.1 Forensic Detection (Research Mode)</h3>
+
+<p>Use this when you receive a file and suspect it may contain hidden data, or when you are conducting a forensic investigation.</p>
+
+<h4>Expert Mode</h4>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">stego detect suspicious_photo.jpg</span></div>
+  <div class="output">  ════════════════════════════════════════════════════════
+  FORENSIC ANALYSIS REPORT
+  ════════════════════════════════════════════════════════
+  File:              suspicious_photo.jpg
+  Size:              2.4 MB
+  Type:              JPEG Image
+  MD5:               d41d8cd98f00b204e9800998ecf8427e
+  SHA-256:           e3b0c44298fc1c149afbf4c8996fb924...
+
+  Suspicion Level:   HIGH (Score: 67.4/100)
+
+  ── Findings (3) ──────────────────────────────────────
+  [1] LSB Analysis                           Severity: HIGH
+      LSB distribution suspiciously uniform (deviation: 0.003).
+      Possible LSB steganography detected.
+
+  [2] Chi-Square Attack                      Severity: HIGH
+      Chi-square test indicates PoV equality — strong indicator.
+
+  [3] ML Ensemble Classifier                 Severity: HIGH
+      Stego probability: 81.2%, Anomaly score: 74.0%
+
+  ── Verdict ──────────────────────────────────────────
+  Significant statistical anomalies detected. File shows
+  strong indicators of steganography.
+  ════════════════════════════════════════════════════════</div>
+</div>
+
+<h3>6.2 Embedding (Hiding Data)</h3>
+
+<div class="callout callout-info">
+  <div class="callout-title">ℹ️ How the output format works</div>
+  <p>No matter what format your cover image is (JPG, BMP, GIF, WEBP, etc.), Ixoryn always saves the output as <strong>PNG</strong> — a lossless format. For audio, it always saves as <strong>FLAC</strong>. This is critical: lossy formats like JPEG destroy the hidden bits during re-compression, making extraction impossible.</p>
+</div>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">stego embed -c family_photo.jpg -p secret_document.pdf -o stego_output.png -pass "HideMe@2024!"</span></div>
+  <div class="output">  [*] Embedding payload...
+  [✓] Data successfully embedded!
+  [✓] Output saved to: stego_output.png
+  [*] Output is lossless PNG to prevent data corruption during transit.</div>
+</div>
+
+<table>
+  <tr><th>Flag</th><th>Required?</th><th>Description</th></tr>
+  <tr><td><code class="inline-code">-c</code></td><td>Yes</td><td>Cover file — the innocent-looking host file</td></tr>
+  <tr><td><code class="inline-code">-p</code></td><td>Yes</td><td>Payload — the file you want to hide inside the cover</td></tr>
+  <tr><td><code class="inline-code">-o</code></td><td>Yes</td><td>Output path for the stego file</td></tr>
+  <tr><td><code class="inline-code">-pass</code></td><td>No</td><td>Password — enables AES-256-GCM encryption AND randomized pixel embedding</td></tr>
+</table>
+
+<div class="callout callout-tip">
+  <div class="callout-title">💡 Always use a password</div>
+  <p>Without a password, payload bits are embedded in sequential pixel order — which is statistically detectable by tools like Ixoryn's own detector. With a password, Ixoryn uses a cryptographically seeded random traversal order (Xoshiro256**), making the embedding pattern indistinguishable from natural noise even under chi-square analysis.</p>
+</div>
+
+<h3>6.3 Extraction (Revealing Hidden Data)</h3>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">stego extract -f stego_output.png -pass "HideMe@2024!" -o recovered_document.pdf</span></div>
+  <div class="output">  [*] Extracting hidden data...
+  [✓] Extraction successful! Payload name: secret_document.pdf
+  [✓] Extracted payload saved to: recovered_document.pdf</div>
+</div>
+
+<div class="callout callout-danger">
+  <div class="callout-title">⛔ Must use lossless stego file</div>
+  <p>You can only extract from <strong>PNG, BMP, WAV, or FLAC</strong> files. If you try to extract from a JPEG (even one that was originally a stego PNG but was converted), it will fail because JPEG compression destroys the hidden bits. Always preserve the original output file.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="url-audit">7. URL & Domain Auditing Module</h2>
+
+<p>This module is your frontline defense against social engineering attacks. It can analyze a URL or domain name and determine whether it is trying to impersonate a legitimate site through various deceptive techniques.</p>
+
+<h3>7.1 Scan Depths</h3>
+
+<table>
+  <tr><th>Depth</th><th>What it checks</th><th>Speed</th></tr>
+  <tr><td><strong>quick</strong></td><td>Phishing keywords, suspicious TLD, homograph chars, typosquatting, URL structure</td><td>~1 sec</td></tr>
+  <tr><td><strong>standard</strong></td><td>Everything in quick + SSL/TLS analysis, DNS records, redirect chain</td><td>~5-10 sec</td></tr>
+  <tr><td><strong>deep</strong></td><td>Everything in standard + WHOIS, domain age, page content, threat intelligence (8 sources)</td><td>~15-30 sec</td></tr>
+</table>
+
+<h3>7.2 Auditing URLs or Domains</h3>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">url audit paypal-secure-login.tk -d deep</span></div>
+  <div class="output">  ─────────────────────────────────────────────────────────
+  Target: paypal-secure-login.tk
+  Risk Level: CRITICAL (87/100)
+
+  Findings:
+    → [Phishing Indicator] Brand keyword 'paypal' in non-official domain
+    → [Phishing Indicator] High-abuse TLD: .tk
+    → [Typosquatting] Similar to 'paypal.com' (distance: 0, subdomain add)
+
+  SSL: No HTTPS detected — HTTPS not available on port 443
+
+  Domain Age: Domain is only 4 days old — very suspicious
+
+  Threat Intelligence: MALICIOUS
+    ✓ URLhaus: MALICIOUS — tagged: phishing, credential-harvest
+    ✓ VirusTotal: MALICIOUS (14/89 engines flagged)
+  ─────────────────────────────────────────────────────────</div>
+</div>
+
+<h3>7.3 Multiple Targets at Once</h3>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">url audit amazon.com amaz0n.com amazon-secure.tk -d standard</span></div>
+  <div class="output">  [amazon.com]      Risk: LOW    (5/100)
+  [amaz0n.com]      Risk: HIGH   (78/100) — Typosquatting + homograph
+  [amazon-secure.tk] Risk: CRITICAL (91/100) — Phishing indicators + .tk TLD</div>
+</div>
+
+<h3>7.4 Specific Checks</h3>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">url ssl github.com</span></div>
+  <div class="output">  SSL/TLS Analysis: github.com
+  Status:          Valid
+  TLS Version:     TLSv1.3
+  Cipher Suite:    TLS_AES_128_GCM_SHA256
+  Days Until Expiry: 284
+  Self-signed:     No</div>
+</div>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">url dns google.com</span></div>
+  <div class="output">  DNS Records: google.com
+  A:     142.250.185.14
+  AAAA:  2607:f8b0:4004:c07::64
+  MX:    10 smtp.google.com
+  NS:    ns1.google.com, ns2.google.com, ns3.google.com, ns4.google.com
+  SPF:   v=spf1 include:_spf.google.com ~all
+  DMARC: v=DMARC1; p=reject; rua=mailto:mailauth-reports@google.com</div>
+</div>
+
+<h3>7.5 Understanding Attack Types</h3>
+
+<table>
+  <tr><th>Attack</th><th>Example</th><th>How Ixoryn Detects It</th></tr>
+  <tr><td>Phishing</td><td>paypal-secure-account.tk</td><td>Brand keyword detection, suspicious TLD, pattern matching</td></tr>
+  <tr><td>Homograph</td><td>pаypal.com (Cyrillic 'а')</td><td>Unicode character analysis, IDN punycode inspection</td></tr>
+  <tr><td>Typosquatting</td><td>paypall.com, paypa1.com</td><td>Levenshtein edit distance vs. 30+ popular domains</td></tr>
+  <tr><td>Pharming</td><td>Legitimate domain, poisoned DNS</td><td>DNS record analysis, DNSSEC status</td></tr>
+  <tr><td>Subdomain stacking</td><td>paypal.com.attacker.com</td><td>Domain part count, structure analysis</td></tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="password-audit">8. Password & Hash Auditing Module</h2>
+
+<h3>8.1 Password Strength Audit</h3>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">pass audit "Password123" --verbose</span></div>
+  <div class="output">  ───────────────────────────────────────────────────
+  Type:             Password Audit
+  Length:           11 characters
+  Strength:         █░░░░  Very Weak
+  Entropy:          37.2 bits
+  Charset:          lowercase, uppercase, digits
+  Crack Time:       3 hours (offline SHA256 GPU)
+
+  Patterns Detected:
+    → Keyboard Walk: Contains keyboard pattern 'qwerty' ... (none here)
+    → Repetition: none
+
+  ⚠ Warnings:
+    ⚠ This is a commonly used password pattern
+    ⚠ Common substitutions detected (1→l, 3→e)
+
+  Suggestions:
+    → Increase length to at least 16 characters
+    → Add special characters (!@#$%^&*)
+    → Avoid predictable word + number patterns
+
+  Compliance:
+    NIST_SP_800_63B: PASS
+    PCI_DSS:         FAIL (requires 12+ chars + special chars)
+    CIS_Controls:    FAIL (requires 14+ chars)
+  ───────────────────────────────────────────────────</div>
+</div>
+
+<h3>8.2 Understanding the Strength Score</h3>
+
+<table>
+  <tr><th>Score</th><th>Label</th><th>Typical Crack Time</th><th>Action Required</th></tr>
+  <tr><td>0</td><td>Very Weak</td><td>Instant — seconds</td><td>Change immediately</td></tr>
+  <tr><td>1</td><td>Weak</td><td>Hours to days</td><td>Improve soon</td></tr>
+  <tr><td>2</td><td>Fair</td><td>Weeks to months</td><td>Acceptable for low-risk only</td></tr>
+  <tr><td>3</td><td>Strong</td><td>Years</td><td>Good for most uses</td></tr>
+  <tr><td>4</td><td>Very Strong</td><td>Centuries+</td><td>Excellent — use this</td></tr>
+</table>
+
+<h3>8.3 Hash Identification</h3>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">pass hash 5f4dcc3b5aa765d61d8327deb882cf99</span></div>
+  <div class="output">  ───────────────────────────────────────────────────
+  Type:             Hash Audit
+  Hash:             5f4dcc3b5aa765d61d8327deb882cf99
+  Length:           32 chars
+  Security Rating:  CRITICAL
+  Salted:           No
+  Crack Difficulty: Trivial — seconds
+
+  Likely Hash Types:
+  1. MD5
+     Bits: 128 | Security: CRITICAL
+     Broken — collisions trivial
+
+  2. NTLM
+     Bits: 128 | Security: CRITICAL
+     Weak — no salting, fast to crack
+
+  Recommendations:
+    → URGENT: This hash is critically insecure. Migrate immediately.
+    → MD5 and SHA-1 are collision-vulnerable. Replace immediately.
+    → Recommended: Argon2id (passwords) or SHA3-256 (integrity)
+  ───────────────────────────────────────────────────</div>
+</div>
+
+<h3>8.4 Generating Secure Passwords</h3>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">pass generate -l 24 -s high</span></div>
+  <div class="output">  [✓] Generated password: xK#9mP@vL2&amp;qRn$wY7!jZcD8
+  Strength: Very Strong
+  Entropy:  142.3 bits</div>
+</div>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">pass generate -s passphrase</span></div>
+  <div class="output">  [✓] Generated password: Falcon-cipher-nebula-Orbit-tundra-4829
+  Strength: Very Strong
+  Entropy:  98.7 bits</div>
+</div>
+
+<h3>8.5 Batch Auditing from File</h3>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">pass batch -f company_passwords.txt --json -o audit_results.json</span></div>
+  <div class="output">  [*] Auditing 847 entries...
+  [✓] Results saved to: audit_results.json</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="threat-intel">9. Threat Intelligence Module</h2>
+
+<p>The threat intelligence module aggregates signals from 8 external sources to give you a comprehensive picture of how dangerous a domain, URL, or IP address is.</p>
+
+<table>
+  <tr><th>Source</th><th>API Key Needed?</th><th>What It Checks</th></tr>
+  <tr><td>URLhaus</td><td>No</td><td>Known malware download URLs</td></tr>
+  <tr><td>crt.sh (Cert Transparency)</td><td>No</td><td>SSL certificate history, subdomain discovery</td></tr>
+  <tr><td>HackerTarget Passive DNS</td><td>No</td><td>Historical DNS resolutions</td></tr>
+  <tr><td>VirusTotal</td><td>Yes (free)</td><td>URL/domain/IP reputation (90+ antivirus engines)</td></tr>
+  <tr><td>AbuseIPDB</td><td>Yes (free)</td><td>IP abuse reports, Tor exit nodes</td></tr>
+  <tr><td>Google Safe Browsing</td><td>Yes (free)</td><td>Google's phishing & malware blocklist</td></tr>
+  <tr><td>Shodan</td><td>Yes (free tier)</td><td>Open ports, running services, known CVEs</td></tr>
+  <tr><td>AlienVault OTX</td><td>Yes (free)</td><td>Community threat pulse database</td></tr>
+</table>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">ti suspicious-campaign.xyz</span></div>
+  <div class="output">  ── Threat Intelligence Report ────────────────────────
+  Target:          suspicious-campaign.xyz
+  Overall Verdict: MALICIOUS
+  Risk Score:      91/100
+  Sources:         5/8 available
+
+  ── Per-Source Results ──────────────────────────────
+  ✓ URLhaus                     MALICIOUS
+  ✓ Certificate Transparency    SUSPICIOUS (cert: 2 days old, issuer: Let's Encrypt)
+  ✓ Passive DNS (HackerTarget)  OK
+  ✓ VirusTotal                  MALICIOUS (22/89 engines)
+  ✓ AbuseIPDB                   SUSPICIOUS (score: 47/100)
+  ✗ Google Safe Browsing        (API key missing — set GSB_API_KEY)
+  ✗ Shodan                      (API key missing — set SHODAN_API_KEY)
+  ✗ AlienVault OTX              (API key missing — set OTX_API_KEY)
+
+  ── Missing API Keys ────────────────────────────────
+    google_safe_browsing: https://developers.google.com/safe-browsing (free)
+    shodan: https://account.shodan.io (free tier)
+    otx: https://otx.alienvault.com (free)</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="reports">10. Report Generation</h2>
+
+<p>Every module in Ixoryn can export its results as a professional HTML or PDF report. These are formatted with a dark, modern design that is appropriate for organizational deliverables.</p>
+
+<h3>From Beginner Mode</h3>
+<p>After any audit, Ixoryn prompts: <em>"Save report? [y/N/html/pdf]"</em>. Type <strong>html</strong> or <strong>pdf</strong> and it generates immediately.</p>
+
+<h3>From Expert Mode</h3>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">url audit target.com -d deep --json -o audit.json</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">report html url audit.json -o target_report.html</span></div>
+  <div class="output">  [✓] Report saved to: target_report.html</div>
+</div>
+
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">ti malware-site.xyz --json -o intel.json</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">report pdf threat_intel intel.json -o intel_report.pdf</span></div>
+  <div class="output">  [✓] Report saved to: intel_report.pdf</div>
+</div>
+
+<div class="callout callout-warn">
+  <div class="callout-title">⚠️ PDF generation requirements</div>
+  <p>PDF export requires either <strong>weasyprint</strong> (install: <code class="inline-code">pip install weasyprint</code>) or <strong>wkhtmltopdf</strong> + pdfkit. If neither is available, Ixoryn saves HTML instead and notifies you. HTML reports open in any browser and can be printed to PDF from there.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="api-keys">11. Setting Up API Keys</h2>
+
+<p>Add API keys to <code class="inline-code">~/.ixoryn/config.json</code> (created automatically on first run):</p>
+
+<pre><code>{
+  "version": "1.0.0",
+  "api_keys": {
+    "virustotal": "YOUR_VIRUSTOTAL_KEY",
+    "abuseipdb": "YOUR_ABUSEIPDB_KEY",
+    "google_safe_browsing": "YOUR_GSB_KEY",
+    "shodan": "YOUR_SHODAN_KEY",
+    "otx": "YOUR_OTX_KEY"
+  }
+}</code></pre>
+
+<p>Alternatively, set environment variables (these take priority over the config file):</p>
+
+<div class="cmd">
+  <div><span class="prompt">$</span> <span class="command">export VIRUSTOTAL_API_KEY="your_key_here"</span></div>
+  <div><span class="prompt">$</span> <span class="command">export ABUSEIPDB_API_KEY="your_key_here"</span></div>
+  <div><span class="prompt">$</span> <span class="command">export GSB_API_KEY="your_key_here"</span></div>
+  <div><span class="prompt">$</span> <span class="command">export SHODAN_API_KEY="your_key_here"</span></div>
+  <div><span class="prompt">$</span> <span class="command">export OTX_API_KEY="your_key_here"</span></div>
+</div>
+
+<p>All of these services have free registration tiers. No payment is required to get started.</p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="expert-shell">12. Expert Shell Deep Dive</h2>
+
+<p>The Expert Shell is a persistent command environment that stays open between commands. It supports tab completion, command history, and all commands follow a consistent flag convention.</p>
+
+<h3>Starting Expert Mode</h3>
+<div class="cmd">
+  <div><span class="prompt">$</span> <span class="command">python3 ixoryn.py</span></div>
+  <div class="output">  [Select Mode]: 2  ← Expert Mode
+
+  ixoryn></div>
+</div>
+
+<h3>Getting Help</h3>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">help</span> <span class="comment">        # Full command reference</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">help crypto</span> <span class="comment">  # Deep help for cryptography</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">help stego</span> <span class="comment">   # Deep help for steganography</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">help url</span> <span class="comment">     # Deep help for URL auditing</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">help pass</span> <span class="comment">    # Deep help for password module</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">help ti</span> <span class="comment">      # Deep help for threat intelligence</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">help report</span> <span class="comment">  # Deep help for report generation</span></div>
+</div>
+
+<h3>Tab Completion</h3>
+<p>Press <strong>Tab</strong> after typing partial commands to auto-complete. For example: typing <code class="inline-code">cryp</code> + Tab completes to <code class="inline-code">crypto</code>.</p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="command-reference">13. Complete Command Reference</h2>
+
+<h3>Cryptography</h3>
+<div class="cmd-ref"><div class="cmd-syntax">crypto encrypt &lt;file|text&gt; -p &lt;password&gt; [-o &lt;output&gt;]</div><div class="cmd-desc">Encrypt with AES-256-GCM + Argon2id. Output: .ixenc file or Base64.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">crypto decrypt &lt;file|base64&gt; -p &lt;password&gt; [-o &lt;output&gt;]</div><div class="cmd-desc">Decrypt. Fails explicitly if password is wrong.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">crypto hash &lt;file|text&gt; -a &lt;algorithm&gt;</div><div class="cmd-desc">Hash with SHA-256, SHA-3-256, SHA-3-512, SHA-512, BLAKE2b, BLAKE2s.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">crypto keygen -n &lt;name&gt; -p &lt;password&gt;</div><div class="cmd-desc">Generate Ed25519 key pair. Private key protected by password.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">crypto sign &lt;file&gt; -k &lt;.ixkey&gt; -p &lt;password&gt; [-o &lt;.ixsig&gt;]</div><div class="cmd-desc">Sign file with Ed25519 private key.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">crypto verify &lt;file&gt; -s &lt;.ixsig&gt; -k &lt;.ixpub&gt;</div><div class="cmd-desc">Verify Ed25519 signature. Returns VALID or INVALID.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">crypto algorithms</div><div class="cmd-desc">List all supported algorithms.</div></div>
+
+<h3>Steganography</h3>
+<div class="cmd-ref"><div class="cmd-syntax">stego detect &lt;file&gt;</div><div class="cmd-desc">Forensic analysis. Outputs suspicion score 0-100, findings, ML verdict.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">stego embed -c &lt;cover&gt; -p &lt;payload&gt; -o &lt;output&gt; [-pass &lt;password&gt;]</div><div class="cmd-desc">Embed payload into cover. Output is always lossless PNG or FLAC.</div><div class="cmd-flags">Flags: -c cover file | -p payload file | -o output | -pass password (enables encryption + randomized traversal)</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">stego extract -f &lt;stego_file&gt; [-pass &lt;password&gt;] -o &lt;output&gt;</div><div class="cmd-desc">Extract hidden payload. Lossless stego file required.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">stego info &lt;file&gt;</div><div class="cmd-desc">File metadata: format, size, dimensions, MD5, SHA256.</div></div>
+
+<h3>URL & Domain Audit</h3>
+<div class="cmd-ref"><div class="cmd-syntax">url audit &lt;target1&gt; [&lt;target2&gt; ...] [-d quick|standard|deep]</div><div class="cmd-desc">Full security audit. Multiple targets supported simultaneously.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">url phishing &lt;target&gt;</div><div class="cmd-desc">Phishing indicator analysis only.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">url homograph &lt;domain&gt;</div><div class="cmd-desc">Homograph/IDN Unicode attack detection.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">url typosquat &lt;domain&gt;</div><div class="cmd-desc">Typosquatting analysis vs. top 30+ popular domains.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">url ssl &lt;domain&gt;</div><div class="cmd-desc">SSL/TLS certificate analysis: version, cipher, expiry, self-signed check.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">url whois &lt;domain&gt;</div><div class="cmd-desc">WHOIS registration data and domain age forensics.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">url dns &lt;domain&gt;</div><div class="cmd-desc">DNS records: A, AAAA, MX, NS, TXT, SPF, DMARC, CNAME.</div></div>
+
+<h3>Threat Intelligence</h3>
+<div class="cmd-ref"><div class="cmd-syntax">ti &lt;target&gt; [--json] [-o &lt;file&gt;] [-report html|pdf]</div><div class="cmd-desc">Query all 8 threat intelligence sources. URLhaus/crt.sh/HackerTarget work without API keys.</div></div>
+
+<h3>Password & Hash</h3>
+<div class="cmd-ref"><div class="cmd-syntax">pass audit &lt;password&gt; [&lt;password2&gt; ...] [--verbose]</div><div class="cmd-desc">Audit password strength, entropy, patterns, compliance.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">pass hash &lt;hash_value&gt; | pass hash -f &lt;file&gt;</div><div class="cmd-desc">Identify hash type and rate security. 300+ algorithm variants.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">pass batch -f &lt;file&gt; [--json] [-o &lt;output&gt;]</div><div class="cmd-desc">Batch audit all passwords in file.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">pass generate -l &lt;length&gt; -s medium|high|passphrase</div><div class="cmd-desc">Generate cryptographically secure password.</div></div>
+
+<h3>Reports</h3>
+<div class="cmd-ref"><div class="cmd-syntax">report html|pdf &lt;type&gt; &lt;json_file&gt; [-o &lt;output&gt;]</div><div class="cmd-desc">Generate HTML or PDF report from saved JSON audit. Types: url, stego, password, hash, threat_intel.</div></div>
+
+<h3>System</h3>
+<div class="cmd-ref"><div class="cmd-syntax">doctor</div><div class="cmd-desc">Full system health check — dependencies, modules, network, filesystem.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">test</div><div class="cmd-desc">Run the complete test suite (60+ unit and integration tests).</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">history</div><div class="cmd-desc">Show command history for this session.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">clear</div><div class="cmd-desc">Clear the screen.</div></div>
+<div class="cmd-ref"><div class="cmd-syntax">banner</div><div class="cmd-desc">Redisplay the Ixoryn banner.</div></div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="examples">14. End-to-End Practical Examples</h2>
+
+<h3>Scenario 1: Checking a Suspicious Email Link</h3>
+<p>You received an email claiming to be from PayPal with a link to "verify your account".</p>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">url audit http://paypal-account-verify.xyz/login -d deep</span></div>
+  <div class="output">  Risk Level: CRITICAL (94/100)
+  → [Phishing] Brand keyword 'paypal' in non-official domain
+  → [Phishing] Suspicious pattern: 'verify.*account'
+  → [Typosquatting] Similar to paypal.com (edit distance: 0)
+  → [Domain Age] 6 days old — very suspicious
+  → [URLhaus] MALICIOUS — tagged: phishing
+  → [VirusTotal] MALICIOUS — 34/89 engines
+  Verdict: DO NOT VISIT. This is a phishing site.</div>
+</div>
+
+<h3>Scenario 2: Encrypting and Signing a Confidential Document</h3>
+<div class="cmd">
+  <div><span class="comment"># Generate your signing key (one time)</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">crypto keygen -n john_smith -p "MyKeyPass!@99"</span></div>
+  <div class="output">  [✓] john_smith.ixkey  [✓] john_smith.ixpub</div>
+  <div><span class="comment"># Encrypt the document</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">crypto encrypt classified_report.pdf -p "DocPass!@2024" -o classified_report.ixenc</span></div>
+  <div class="output">  [✓] Encrypted → classified_report.ixenc</div>
+  <div><span class="comment"># Sign it</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">crypto sign classified_report.pdf -k john_smith.ixkey -p "MyKeyPass!@99"</span></div>
+  <div class="output">  [✓] Signature → classified_report.pdf.ixsig</div>
+  <div><span class="comment"># Send: classified_report.ixenc + classified_report.pdf.ixsig + john_smith.ixpub</span></div>
+</div>
+
+<h3>Scenario 3: Forensic Investigation of a Suspected Stego File</h3>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">stego detect evidence_photo.png</span></div>
+  <div class="output">  Suspicion Level: HIGH (Score: 71/100)
+  → LSB Analysis: HIGH — deviation 0.002 (near-perfect 0.5)
+  → Chi-Square: HIGH — normalized chi-sq: 0.3
+  → ML Classifier: LIKELY_STEGO — probability: 84%
+  Verdict: HIGH PROBABILITY of steganographic content.</div>
+</div>
+<div class="cmd">
+  <div><span class="comment"># Try extracting without a password</span></div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">stego extract -f evidence_photo.png -o extracted_content</span></div>
+  <div class="output">  [✓] Extraction successful! Payload: secret_comms.txt
+  Hidden message: "Meet at 3pm, location: warehouse district"</div>
+</div>
+
+<h3>Scenario 4: Auditing a Company's Password File</h3>
+<div class="cmd">
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">pass batch -f exported_hashes.txt --json -o password_audit.json</span></div>
+  <div class="output">  [*] Auditing 1,247 entries...
+  [✓] Done. Results saved to: password_audit.json</div>
+  <div><span class="prompt">ixoryn&gt;</span> <span class="command">report html hash password_audit.json -o password_audit_report.html</span></div>
+  <div class="output">  [✓] Report saved to: password_audit_report.html</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="doctor">15. Ixoryn Doctor</h2>
+
+<p>Run Ixoryn Doctor anytime you suspect the tool is not working correctly, when deploying to a new system, or as a first step before important operations.</p>
+
+<div class="cmd">
+  <div><span class="prompt">$</span> <span class="command">python3 ixoryn.py</span> <span class="comment">  → Select 3 (Ixoryn Doctor)</span></div>
+  <div class="output">  ── System Information ─────────────────────────
+  OS:               Linux-6.1.0-kali5-amd64
+  Architecture:     x86_64
+  Python:           3.11.4
+  Python Path:      /usr/bin/python3
+
+  [✓] Python version OK (3.11)
+
+  ── Dependency Status ──────────────────────────
+  ✓ cryptography              OK (v41.0.7)
+  ✓ argon2-cffi               OK (v23.1.0)
+  ✓ Pillow                    OK (v10.1.0)
+  ✗ scikit-learn              MISSING
+  ...
+
+  ── Module Self-Test ───────────────────────────
+  [✓] Cryptography Engine           FUNCTIONAL
+  [✓] Steganography Detector        FUNCTIONAL
+  [✓] URL Auditor                   FUNCTIONAL
+  [✓] Password Auditor              FUNCTIONAL
+
+  ── Summary ────────────────────────────────────
+  Found 1 issue(s):
+    → Python package 'scikit-learn' is not installed
+
+  Run full module test suite now? [y/N]: y</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="testing">16. Running Tests</h2>
+
+<div class="cmd">
+  <div><span class="prompt">$</span> <span class="command">python3 tests/test_suite.py</span></div>
+  <div class="output">  ══════════════════════════════════════════════════════
+    IXORYN TEST SUITE
+  ══════════════════════════════════════════════════════
+
+  test_encrypt_decrypt_roundtrip ... ok
+  test_encrypt_wrong_password_fails ... ok
+  test_filename_preserved ... ok
+  test_strong_password_high_score ... ok
+  test_bcrypt_hash_identified ... ok
+  test_typosquatting_google ... ok
+  ...
+
+  Tests run:    63
+  Passed:       63
+  Failures:     0
+  Status: ALL TESTS PASSED
+  ══════════════════════════════════════════════════════</div>
+</div>
+
+<p>Or from Expert Mode: <code class="inline-code">test</code></p>
+<p>Or via pytest: <code class="inline-code">python3 -m pytest tests/ -v</code></p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- TECHNICAL SECTION -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<h2 id="architecture">17. Architecture (Technical)</h2>
+
+<div class="diagram">
+ixoryn/
+├── ixoryn.py                     Entry point — banner, bootstrap, dep check, mode menu
+├── ixoryn/
+│   ├── core/
+│   │   ├── bootstrap.py          Runtime init: dirs, config, env vars
+│   │   ├── dependency_manager.py Auto-detect, prompt, install all packages
+│   │   └── logger.py             Centralized logging to ~/.ixoryn/logs/
+│   │
+│   ├── ui/
+│   │   ├── banner.py             Colors, formatting, prompt utilities
+│   │   ├── main_menu.py          Mode selection (Beginner/Expert/Doctor)
+│   │   ├── beginner_menu.py      Full guided menu system
+│   │   ├── expert_shell.py       Metasploit-style command shell + help system
+│   │   ├── doctor.py             System health check UI
+│   │   └── file_picker.py        Cross-platform GUI picker (tkinter + terminal fallback)
+│   │
+│   ├── utils/
+│   │   └── report_generator.py   HTML + PDF report generation (dark theme)
+│   │
+│   └── modules/
+│       ├── crypto/
+│       │   └── engine.py         AES-256-GCM + Argon2id + Ed25519 + NaCl + hashing
+│       │
+│       ├── stego/
+│       │   ├── detector.py       Forensic detector: LSB, chi-sq, RS, DCT, ELA, entropy, EXIF
+│       │   ├── ml_detector.py    ML ensemble: Random Forest + Isolation Forest (65 features)
+│       │   ├── embed.py          LSB embedding engine with randomized traversal
+│       │   ├── extract.py        Extraction engine with integrity verification
+│       │   └── traversal.py      Xoshiro256** PRNG traversal seeded by Argon2id
+│       │
+│       ├── url_audit/
+│       │   ├── auditor.py        Phishing, homograph, typosquat, SSL, DNS, WHOIS, redirects
+│       │   └── threat_intel.py   8-source threat intelligence aggregator
+│       │
+│       └── password/
+│           ├── auditor.py        zxcvbn scoring, 300+ hash patterns, compliance check
+│           └── generator.py      Cryptographically secure password generation (secrets module)
+│
+├── tests/
+│   └── test_suite.py             63 unit + integration tests across all modules
+│
+├── install.sh / install.bat      Cross-platform installers
+├── requirements.txt / setup.py / pyproject.toml
+└── README.md
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="technology-choices">18. Technology Choices (Technical)</h2>
+
+<p>Every technology decision in Ixoryn was deliberate. Here is the rationale for each critical choice, including why alternatives were rejected:</p>
+
+<table>
+  <tr><th>Component</th><th>Ixoryn Uses</th><th>Alternatives Rejected</th><th>Why This Choice</th></tr>
+  <tr>
+    <td>Key Derivation</td>
+    <td><strong>Argon2id</strong></td>
+    <td>PBKDF2, scrypt, bcrypt</td>
+    <td class="tech-reason">Argon2id won the Password Hashing Competition (2015). It is both memory-hard (defeats GPU/ASIC attacks) and resistant to side-channel attacks. PBKDF2 has no memory hardness. scrypt has implementation vulnerabilities. bcrypt has a 72-byte password limit and is slower to configure correctly.</td>
+  </tr>
+  <tr>
+    <td>Symmetric Encryption</td>
+    <td><strong>AES-256-GCM</strong></td>
+    <td>AES-CBC, ChaCha20, DES, 3DES</td>
+    <td class="tech-reason">AES-GCM provides authenticated encryption — it simultaneously encrypts AND verifies integrity in one operation. AES-CBC requires separate MAC and is vulnerable to padding oracle attacks. DES/3DES are broken. ChaCha20-Poly1305 is an excellent alternative (used in NaCl module) but AES-GCM has hardware acceleration on all modern CPUs.</td>
+  </tr>
+  <tr>
+    <td>Digital Signatures</td>
+    <td><strong>Ed25519</strong></td>
+    <td>RSA-2048, ECDSA (P-256)</td>
+    <td class="tech-reason">Ed25519 uses Curve25519 which is immune to timing attacks by design — other curves leak private key bits through timing. Ed25519 has smaller keys (32 bytes vs. 256+ for RSA), faster operations, and is resistant to weak RNG attacks that break ECDSA.</td>
+  </tr>
+  <tr>
+    <td>Asymmetric Encryption</td>
+    <td><strong>NaCl Box (X25519 + XSalsa20-Poly1305)</strong></td>
+    <td>RSA-OAEP, ElGamal</td>
+    <td class="tech-reason">NaCl was designed by Daniel Bernstein specifically to be impossible to use insecurely. The API makes correct usage the only option. RSA-OAEP requires careful padding selection. NaCl performs key exchange and encryption in a single, audited primitive.</td>
+  </tr>
+  <tr>
+    <td>Hashing (fast)</td>
+    <td><strong>BLAKE2b</strong></td>
+    <td>MD5, SHA-1, SHA-256</td>
+    <td class="tech-reason">BLAKE2b is faster than MD5 on 64-bit systems, cryptographically secure (unlike MD5/SHA-1 which are broken), and is recommended by NIST. SHA-256 is also offered for compatibility.</td>
+  </tr>
+  <tr>
+    <td>Stego Embedding</td>
+    <td><strong>LSB + Xoshiro256** PRNG</strong></td>
+    <td>DCT, F5, OutGuess</td>
+    <td class="tech-reason">LSB with randomized traversal provides the best capacity-to-detectability ratio for general use. DCT-based tools are JPEG-specific and have lower capacity. F5 and OutGuess are harder to implement cross-format. The randomized traversal specifically neutralizes chi-square attacks against Ixoryn's own outputs.</td>
+  </tr>
+  <tr>
+    <td>Stego Detection</td>
+    <td><strong>Multi-method ensemble + Random Forest</strong></td>
+    <td>Single-test tools (StegHide detect only)</td>
+    <td class="tech-reason">No single test is reliable across all stego methods. Chi-square detects sequential LSB; RS analysis detects LSB with modifications; ELA detects JPEG manipulation; ML generalizes across methods. The ensemble provides much higher accuracy than any single technique.</td>
+  </tr>
+  <tr>
+    <td>Password Scoring</td>
+    <td><strong>zxcvbn</strong></td>
+    <td>Naive rules (length + charset counts)</td>
+    <td class="tech-reason">zxcvbn was developed by Dropbox and uses a realistic attacker model — it checks dictionary words, common patterns, dates, keyboard walks, and leet substitutions. Naive rules would give "P@ssw0rd!" a high score despite being trivially crackable. zxcvbn gives it 1/4.</td>
+  </tr>
+  <tr>
+    <td>PRNG for traversal</td>
+    <td><strong>Xoshiro256**</strong></td>
+    <td>Python random, numpy random</td>
+    <td class="tech-reason">Xoshiro256** passes all statistical randomness tests (BigCrush), is fast, and is fully deterministic from seed — allowing exact traversal reproduction during extraction. Python's random module uses Mersenne Twister which has predictable patterns that could theoretically reveal traversal order.</td>
+  </tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="what-makes-unique">19. What Makes Ixoryn Unique</h2>
+
+<p>The security tool landscape is crowded. Here is what sets Ixoryn apart:</p>
+
+<div class="compare">
+  <div class="compare-col good">
+    <div class="compare-label">✓ What Ixoryn does differently</div>
+    <div class="compare-item">Integrates 4 major security disciplines in one tool with shared context</div>
+    <div class="compare-item">Password audit runs automatically at every encryption/key operation</div>
+    <div class="compare-item">Stego outputs are immune to Ixoryn's own detector (password-seeded traversal)</div>
+    <div class="compare-item">Zero manual setup — auto-detects and installs all 35+ dependencies</div>
+    <div class="compare-item">Dual-interface: menu-driven (beginner) + command shell (expert) — same features</div>
+    <div class="compare-item">ML ensemble (65 features, Random Forest + Isolation Forest) for stego detection</div>
+    <div class="compare-item">8-source threat intelligence with graceful degradation when keys absent</div>
+    <div class="compare-item">Argon2id used everywhere — not PBKDF2 or scrypt</div>
+    <div class="compare-item">Output always lossless (no accidental data loss from format conversion)</div>
+    <div class="compare-item">Fully cross-platform with GUI file picker + terminal fallback</div>
+  </div>
+  <div class="compare-col bad">
+    <div class="compare-label">✗ What competitors don't do</div>
+    <div class="compare-item">Most stego tools are single-function (only hide OR only detect)</div>
+    <div class="compare-item">Most password auditors don't run at point of encryption use</div>
+    <div class="compare-item">Most stego outputs are detectable by standard chi-square tests</div>
+    <div class="compare-item">Most security tools require extensive manual dependency setup</div>
+    <div class="compare-item">Most tools are either beginner-friendly OR expert-grade, not both</div>
+    <div class="compare-item">Most stego detectors use 1-2 tests, not a multi-method ensemble</div>
+    <div class="compare-item">Most domain auditors query at most 1-2 threat intelligence sources</div>
+    <div class="compare-item">Most tools still use PBKDF2 or MD5-based encryption</div>
+    <div class="compare-item">Many stego tools output JPEG which corrupts hidden data</div>
+    <div class="compare-item">Most tools are Linux-only or require WSL on Windows</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="limitations">20. Limitations</h2>
+
+<div class="callout callout-warn">
+  <div class="callout-title">⚠️ Known Limitations</div>
+  <p>No tool is perfect. Understanding Ixoryn's limitations helps you use it effectively:</p>
+</div>
+
+<table>
+  <tr><th>Limitation</th><th>Impact</th><th>Workaround / Roadmap</th></tr>
+  <tr>
+    <td>Stego capacity limited by cover size</td>
+    <td>Cannot hide a 10MB file in a 100KB cover image</td>
+    <td>Use a larger cover file. Ixoryn gives a clear error with the exact capacity.</td>
+  </tr>
+  <tr>
+    <td>ML model is synthetic-trained</td>
+    <td>Classifier trained on synthetic feature distributions, not real stego datasets</td>
+    <td>Will improve with real-world stego datasets in v1.2. Rule-based tests remain reliable.</td>
+  </tr>
+  <tr>
+    <td>Password cracking is estimation only</td>
+    <td>Crack time estimates are mathematical, not demonstrated attacks</td>
+    <td>By design — cracking attempts would require Hashcat/JtR integration.</td>
+  </tr>
+  <tr>
+    <td>Threat intel requires API keys for full coverage</td>
+    <td>Without keys, only 3/8 sources available</td>
+    <td>All 5 paid APIs have free tiers. 15 minutes of registration = full coverage.</td>
+  </tr>
+  <tr>
+    <td>PDF reports need weasyprint/wkhtmltopdf</td>
+    <td>PDF export may not work on all systems</td>
+    <td>HTML reports always work and are printable to PDF from any browser.</td>
+  </tr>
+  <tr>
+    <td>No real-time monitoring</td>
+    <td>Ixoryn audits on demand, not continuously</td>
+    <td>Planned for v2.0: daemon mode with scheduled scans and alerts.</td>
+  </tr>
+  <tr>
+    <td>No plugin system yet</td>
+    <td>Cannot add custom modules without modifying source</td>
+    <td>Plugin API planned for v1.3.</td>
+  </tr>
+  <tr>
+    <td>Stego LSB is detectable without password</td>
+    <td>Sequential LSB embedding is statistically visible</td>
+    <td>Always use -pass flag when security is required. Password = randomized traversal.</td>
+  </tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="roadmap">21. Roadmap</h2>
+
+<table>
+  <tr><th>Version</th><th>Planned Features</th></tr>
+  <tr><td><strong>v1.2</strong></td><td>Real stego dataset training for ML model, DNSSEC validation, Tor exit node detection, IPv6 support throughout</td></tr>
+  <tr><td><strong>v1.3</strong></td><td>Plugin API for custom modules, YARA rule integration, threat hunting mode, additional cipher modes (ChaCha20-Poly1305 as default option)</td></tr>
+  <tr><td><strong>v2.0</strong></td><td>Daemon mode with scheduled scans, webhook alerts, REST API, web dashboard, multi-user support with RBAC, Docker image</td></tr>
+  <tr><td><strong>v2.1</strong></td><td>Hashcat/JtR integration for demonstrated cracking, network traffic analysis, API gateway for enterprise integration</td></tr>
+</table>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Ixoryn Security Platform</strong> — Advanced Security & Intelligence Platform</p>
+  <p style="margin-top: 8px;">github.com/ixoryn/ixoryn &bull; For authorized security use only &bull; MIT License</p>
+  <p style="margin-top: 8px; color: #21262d;">User Guide generated by Ixoryn Documentation System</p>
+</footer>
+
+</main>
+</div>
+</body>
+</html>

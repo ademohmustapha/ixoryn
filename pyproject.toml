@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "ixoryn"
+version = "1.0.0"
+description = "Advanced Security Intelligence Platform"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+keywords = ["security", "cryptography", "steganography", "phishing", "password", "forensics"]
+
+[project.urls]
+Homepage = "https://github.com/ademohmustapha/ixoryn"
+Issues = "https://github.com/ademohmustapha/ixoryn/issues"
+
+[project.scripts]
+ixoryn = "ixoryn:main"
+
+[tool.setuptools.packages.find]
+include = ["ixoryn*"]
