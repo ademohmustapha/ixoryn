@@ -50,6 +50,13 @@ def cprint(text: str, color: str = Colors.WHITE, end: str = "\n") -> None:
 class Banner:
     """All UI print helpers centralised here."""
 
+    # ── Banner box geometry ────────────────────────────────────────────────────
+    # Top/bottom borders are 66 chars wide (including the 2-space left indent):
+    #   "  ╔" + "═"×62 + "╗"  = 2 + 1 + 62 + 1 = 66
+    # Every interior line must therefore be:
+    #   "  ║" + <content padded to 62 chars> + "║" = 66
+    # ──────────────────────────────────────────────────────────────────────────
+
     BANNER = (
         f"\n{Colors.CYAN}{Colors.BOLD}"
         "  ██╗██╗  ██╗ ██████╗ ██████╗ ██╗   ██╗███╗   ██╗\n"
@@ -59,12 +66,14 @@ class Banner:
         "  ██║██╔╝ ██╗╚██████╔╝██║  ██║   ██║   ██║ ╚████║\n"
         "  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═══╝\n"
         f"{Colors.RESET}{Colors.TEAL}\n"
+        # Box: '  ╔' + '═'×62 + '╗'  = 66 chars
+        # Each row: '  ║' + <62-char content> + '║' = 66 chars
         "  ╔══════════════════════════════════════════════════════════════╗\n"
-        "  ║       Advanced Security & Intelligence Platform       ║\n"
-        "  ║  Encrypt · Stego · NetRecon · HashCrack · Breach · Forensics║\n"
-        "  ║     URL Audit · CVE Lookup · Subdomain Enum · WiFi Scan     ║\n"
-        "  ║      © 2026 Ademoh Mustapha Onimisi  ·  MIT License         ║\n"
-        "  ║         github.com/ademohmustapha/ixoryn                   ║\n"
+        "  ║          Advanced Security & Intelligence Platform           ║\n"
+        "  ║ Encrypt · Stego · NetRecon · HashCrack · Breach · Forensics  ║\n"
+        "  ║     URL Audit · CVE Lookup · Subdomain Enum · WiFi Scan      ║\n"
+        "  ║        © 2026 Ademoh Mustapha Onimisi  ·  MIT License        ║\n"
+        "  ║               github.com/ademohmustapha/ixoryn               ║\n"
         "  ╚══════════════════════════════════════════════════════════════╝\n"
         f"{Colors.RESET}"
     )
